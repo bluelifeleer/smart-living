@@ -1,14 +1,14 @@
 <template>
   <div class="notes-container">
-    <NavBar :title="navBar.title"></NavBar>
+    <NavBar :title="navBar.title" :showMenu="navBar.showMenu"></NavBar>
     <div class="note-list-box">
       <div class="note-list-items" v-for="(note,$index) in notes.list" :key="$index">
         <div class="note-list-items-header">{{note.datetime}}</div>
         <div class="note-list-items-body">
-          <div class="note-items" v-for="(record,$index) in note.records" :key="$index">
+          <v-touch tag="a" href="javascript:void(0);" class="note-items" v-for="(record,$index) in note.records" :key="$index" @tap="navigationTo($event,record,$index)">
             <span class="type-box">{{record.type|typeFilter}}</span>
             <span class="datetime-box">时间：{{record.datetime}}</span>
-          </div>
+          </v-touch>
         </div>
         <div class="note-list-items-footer"></div>
       </div>
@@ -23,7 +23,8 @@ export default {
   data() {
     return {
       navBar: {
-        title: '打卡统计'
+        title: '打卡统计',
+        showMenu: true
       },
       uid: '5f303beb303e6f18e3be58dc',
       notes: {
@@ -95,6 +96,11 @@ export default {
         loading.clear()
         console.log(err)
       })
+    },
+    navigationTo(e, item, index) {
+      this.$router.push({
+        path: `/location?id=${item._id}&type=${item.type}`
+      })
     }
   },
   filters: {
@@ -129,7 +135,7 @@ export default {
   width: 90%;
   height: 40px;
   line-height: 40px;
-  font-size: 18px;
+  font-size: 14px;
   padding: 0 5%;
 }
 
@@ -146,8 +152,10 @@ export default {
 }
 
 .note-items {
+  display: block;
   width: 100%;
   height: 40px;
+  color: #2c3e50;
 }
 
 .type-box {

@@ -1,6 +1,6 @@
 <template>
   <div class="home-container">
-    <NavBar :title="navBar.title"></NavBar>
+    <NavBar :title="navBar.title" :showMenu="navBar.showMenu"></NavBar>
     <div class="user-box">
       <div class="user-icon">李鹏</div>
       <div class="user-name">
@@ -26,7 +26,8 @@ export default {
   data() {
     return {
       navBar: {
-        title: '打卡'
+        title: '打卡',
+        showMenu: true
       },
       punchBlockText: '上班打卡',
       nowDate: '23:00:00',
